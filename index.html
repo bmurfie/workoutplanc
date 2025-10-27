@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>20-Week Hyper-Anabolic Recomposition Protocol</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* CSS Variables for Color and Spacing */
+    :root {
+      --bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      --panel: rgba(26, 26, 36, 0.85);
+      --panel-2: rgba(30, 30, 40, 0.75);
+      --panel-hover: rgba(35, 35, 45, 0.85);
+      --ink: #E8E8E8;
+      --muted: #A0A0B0;
+      --line: #2A2A3A;
+      --accent: #FFB84D;
+      --accent-glow: rgba(255, 184, 77, 0.3);
+      --info: #4FC3F7;
+      --info-glow: rgba(79, 195, 247, 0.25);
+      --danger: #FF6B6B;
+      --danger-glow: rgba(255, 107, 107, 0.25);
+      --success: #51CF66;
+      --radius: 16px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+      --backdrop-filter: blur(16px) saturate(180%);
+      --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: #0a0a0a;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 184, 77, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(79, 195, 247, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
+      line-height: 1.7;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 48px 40px;
+      background: var(--panel);
+      border: var(--border-glass);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Typography */
+    h1 {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: clamp(2rem, 4vw, 3rem);
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin: 0 0 12px;
+      text-shadow: 0 0 40px var(--accent-glow);
+      position: relative;
+      padding-bottom: 24px;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    h2 {
+      color: var(--info);
+      font-size: 1.5rem;
+      margin: 36px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(79, 195, 247, 0.3);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px var(--info-glow);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 24px 0 14px;
+      color: var(--accent);
+      font-weight: 600;
+      padding-left: 16px;
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, var(--accent-glow), transparent);
+      padding: 10px 16px;
+      border-radius: 4px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .data-label {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--info);
+      font-weight: 600;
+      padding: 2px 8px;
+      background: rgba(79, 195, 247, 0.1);
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* Tab System */
+    .tab-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 32px;
+    }
+
+    .tab-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .tab-input {
+      display: none;
+    }
+
+    .tab-label {
+      padding: 18px 16px;
+      background: var(--panel-2);
+      border: var(--border-glass);
+      color: var(--muted);
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+      position: relative;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .tab-label::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .tab-label:hover {
+      background: var(--panel-hover);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-label:hover::before {
+      left: 100%;
+    }
+
+    .tab-input:checked + .tab-label {
+      background: linear-gradient(135deg, rgba(255, 184, 77, 0.2), rgba(79, 195, 247, 0.2));
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: scale(1.02);
+    }
+
+    .tab-input:checked + .tab-label::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #tab-1:checked ~ #content-1,
+    #tab-2:checked ~ #content-2,
+    #tab-3:checked ~ #content-3,
+    #tab-4:checked ~ #content-4 {
+      display: block;
+    }
+
+    /* Divider */
+    .divider {
+      height: 2px;
+      border: 0;
+      background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+      margin: 24px 0 32px;
+      opacity: 0.8;
+    }
+
+    /* Boxes */
+    .color-code-box {
+      padding: 32px;
+      border-radius: var(--radius);
+      background: var(--panel-2);
+      border: var(--border-glass);
+      margin-bottom: 28px;
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .color-code-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      transition: var(--transition);
+    }
+
+    .color-code-box:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .training::before { 
+      background: linear-gradient(90deg, var(--accent), transparent);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .nutrition::before { 
+      background: linear-gradient(90deg, var(--info), transparent);
+      box-shadow: 0 0 24px var(--info-glow);
+    }
+
+    .compounds::before { 
+      background: linear-gradient(90deg, var(--danger), transparent);
+      box-shadow: 0 0 24px var(--danger-glow);
+    }
+
+    /* Lists */
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 12px;
+      transition: var(--transition);
+    }
+
+    ul li:hover {
+      padding-left: 32px;
+    }
+
+    ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.2em;
+      line-height: 1.4;
+    }
+
+    /* Grid */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .phase-grid > div {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+    }
+
+    .phase-grid > div:hover {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      border: var(--border-glass);
+      border-radius: var(--radius);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: rgba(79, 195, 247, 0.15);
+      color: var(--info);
+      padding: 16px 12px;
+      text-align: left;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.85rem;
+      border-bottom: 2px solid rgba(79, 195, 247, 0.3);
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    td strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        padding: 28px 20px;
+      }
+
+      .tab-labels {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        letter-spacing: 2px;
+      }
+
+      .phase-grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 10px 8px;
+      }
+
+      .color-code-box {
+        padding: 20px;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 184, 77, 0.3);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 184, 77, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>20-Week Hyper-Anabolic Protocol</h1>
+
+    <!-- PURE CSS TAB IMPLEMENTATION --><div class="tab-container">
+        <!-- Input Radios (hidden, must be siblings of content) --><input type="radio" name="tabs" id="tab-1" class="tab-input" checked />
+        <input type="radio" name="tabs" id="tab-2" class="tab-input" />
+        <input type="radio" name="tabs" id="tab-3" class="tab-input" />
+        <input type="radio" name="tabs" id="tab-4" class="tab-input" />
+
+        <!-- Tab Labels --><div class="tab-labels">
+            <label for="tab-1" class="tab-label">📊 Overview</label>
+            <label for="tab-2" class="tab-label">💪 Training</label>
+            <label for="tab-3" class="tab-label">💉 Pharmacology</label>
+            <label for="tab-4" class="tab-label">🍽️ Diet</label>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- 1. Overview Content --><section id="content-1" class="tab-content">
+          <div class="color-code-box compounds">
+            <h2 style="text-align: center;">Mission Objectives: Recomposition & Regrowth</h2>
+            <p class="muted" style="text-align:center; margin-bottom:16px;">
+              This protocol is engineered to aggressively leverage <strong>myonuclei retention</strong> (muscle memory) over 20 weeks, converting stored energy into high-quality muscle fiber.
+            </p>
+
+            <div style="
+                background: rgba(0, 0, 0, 0.2);
+                padding: 24px;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                transition: var(--transition);
+                margin-top: 20px;
+            ">
+              <h3>Performance Goals</h3>
+              <ul>
+                <li><strong>Primary Objective:</strong> Achieve significant <span class="data-label">body recomposition</span> (aggressive fat loss with maximal muscle gain).</li>
+                <li><strong>Weakness Eradication:</strong> Systematically eliminate the arm weakness via high-frequency training.</li>
+                <li><strong>Initial Target:</strong> Transition from <span class="data-label">205 lb</span> to a lean, conditioned <span class="data-label">215–225 lb</span> by Week 20.</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:32px; padding-top:16px; border-top:1px solid var(--line-2);">
+              <h3 style="color:var(--info);">Protocol Phase Architecture</h3>
+              <ul>
+                <li><strong>Phase 1 (Weeks 1–4):</strong> High volume, lower intensity, tissue stabilization.</li>
+                <li><strong>Phase 2 (Weeks 5–12):</strong> Increased load, PPL ×2, Nandrolone initiated for joint support.</li>
+                <li><strong>Phase 3 (Weeks 13–20):</strong> Body-part split, RPE 9–10, maximal caloric/compound saturation.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Training Content --><section id="content-2" class="tab-content">
+          <div class="color-code-box training">
+            <h2>Training Protocol Overload</h2>
+            <p style="color:var(--accent); font-weight:700; text-transform:uppercase; margin:0 0 20px;">
+              Primary Focus: Progressive Overload & High-Frequency Arms
+            </p>
+
+            <!-- Phase 1 Training -->
+            <h3>Phase 1: Re-Awakening (Weeks 1–4)</h3>
+            <p class="muted"><strong>RPE 7 (3 reps in reserve), 15–20 Reps.</strong> Focus on mind-muscle connection and controlled negatives (3-second eccentric).</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Focus</th>
+                    <th>Exercise</th>
+                    <th>Sets x Reps</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Day 1</td>
+                    <td>Upper (Pull Focus)</td>
+                    <td>Machine Pullover, Seated Cable Row, Cable Face Pull, Hammer Curl (Machines), Cable Tricep Pushdown</td>
+                    <td>3x15–20, 3x15–20, 3x20, 3x15–20, 3x15–20</td>
+                    <td>Controlled 3s negative on rows. High-rep rotator cuff activation.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 2</td>
+                    <td>Lower (Quad Focus)</td>
+                    <td>Leg Extension (Pre-Exhaust), Leg Press, Standing Calf Raise, Machine Hip Adduction</td>
+                    <td>3x15–20, 3x15–20, 4x20, 3x20</td>
+                    <td>Feet low on leg press, deep stretch.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 3</td>
+                    <td>Upper (Push Focus)</td>
+                    <td>Incline Dumbbell Press, Pec Deck Fly, Dumbbell Lateral Raise, Machine Overhead Press</td>
+                    <td>3x15–20, 3x15–20, 3x20, 3x15–20</td>
+                    <td>Light, strict control. Maximize blood flow with flyes and raises.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 4</td>
+                    <td><strong>OFF</strong></td>
+                    <td><strong>REST</strong></td>
+                    <td>—</td>
+                    <td>Mandatory Mobility/Foam Rolling.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 5</td>
+                    <td>Full Body Primer</td>
+                    <td>Goblet Squat (Deep Stretch), Dumbbell Bench Press, Cable Row (Wide Grip), EZ Bar Curl / Pushdown (Superset)</td>
+                    <td>3x15, 3x15, 3x15, 2x20 (each)</td>
+                    <td>Focus on deep stretch in the squat. Arm finisher.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 6</td>
+                    <td>Lower (Ham Focus)</td>
+                    <td>Seated Leg Curl, 45-Degree Hyperextension, Seated Calf Raise, Hanging Leg Raise</td>
+                    <td>3x15–20, 3x15–20, 4x20, 3x15</td>
+                    <td>Focus on glute/ham contraction on hyperextensions.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 7</td>
+                    <td>Upper (Volume Pump)</td>
+                    <td>Cable Crossover (High to Low), Dumbbell Pullover, Seated Dumbbell Curl, Rope Tricep Extension</td>
+                    <td>3x15, 3x15, 3x15, 3x15</td>
+                    <td>High frequency arm work.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phase 2 Training -->
+            <h3>Phase 2: Intensity Drive (Weeks 5–12)</h3>
+            <p class="muted"><strong>RPE 8–9 (1–2 reps in reserve), 8–12 Reps.</strong> Introduce Nandrolone, BFR, and higher loads.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Focus</th>
+                    <th>Exercise</th>
+                    <th>Sets x Reps</th>
+                    <th>Techniques</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Day 1</td>
+                    <td>PUSH (Chest/Shoulders/Tri)</td>
+                    <td>Barbell Incline Press, Flat Dumbbell Press, Seated Dumbbell OHP, Lateral Raise, Cable Tricep Pushdown, Skull Crusher</td>
+                    <td>4x8–10, 3x10–12, 3x8–10, 4x12–15, 3x10, 1x8 + Drop x 2</td>
+                    <td>Controlled negative on incline press. <strong>Drop Set</strong> on Skull Crushers.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 2</td>
+                    <td>PULL (Back/Biceps)</td>
+                    <td>Weighted Pull-up/Lat Pulldown, T-Bar Row (Heavy), Cable Seated Row, Dumbbell Shrug, Barbell Curl, Cable Curl</td>
+                    <td>4x8–10, 4x8–10, 3x10–12, 3x12, 3x8–10, 1x100 Reps</td>
+                    <td>Focus on stretch/squeeze on rows. <strong>Rest-Pause Finisher</strong> on Cable Curl.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 3</td>
+                    <td>LEGS (Quad Focus)</td>
+                    <td>Barbell Squat, Hack Squat/Leg Press, Leg Extension, Walking Lunge</td>
+                    <td>4x8–10, 3x12–15, 3x12–15, 3x15 (per leg)</td>
+                    <td>Controlled depth on squats. Walking Lunge finisher.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 4</td>
+                    <td>PUSH (Shoulders/Chest/Tri)</td>
+                    <td>Machine Overhead Press, Pec Deck Fly, Cable Lateral Raise, Rope Tricep Extension, <strong>BFR Tricep Pushdown</strong></td>
+                    <td>3x10–12, 3x12–15, 3x15, 3x12, 3x30</td>
+                    <td>High volume delts. <strong>Blood Flow Restriction (BFR)</strong> finisher.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 5</td>
+                    <td>PULL (Thickness/Biceps)</td>
+                    <td>Romanian Deadlift (RDL), Dumbbell Pullover, Single-Arm Dumbbell Row (Heavy), Hammer Curl, <strong>BFR Cable Curl</strong></td>
+                    <td>4x8–10, 3x12, 3x10–12, 3x10, 3x30</td>
+                    <td>Focus on hamstring stretch on RDL. <strong>BFR</strong> finisher.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 6</td>
+                    <td>LEGS (Ham Focus)</td>
+                    <td>Lying/Seated Leg Curl, Stiff-Legged Deadlift (DB), Calf Press (Leg Press), Hanging Leg Raise</td>
+                    <td>4x10–12, 3x10–12, 4x15, 3x15</td>
+                    <td>Deep stretch on Stiff-Legged Deadlifts.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 7</td>
+                    <td><strong>OFF</strong></td>
+                    <td><strong>REST</strong></td>
+                    <td>—</td>
+                    <td>Maximize recovery.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phase 3 Training -->
+            <h3>Phase 3: Peak Overload (Weeks 13–20)</h3>
+            <p class="muted"><strong>RPE 9–10 (Failure sets), 6–12 Reps.</strong> Body-Part Split. Maximize advanced techniques.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Focus</th>
+                    <th>Exercise</th>
+                    <th>Sets x Reps</th>
+                    <th>Techniques</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Day 1</td>
+                    <td>CHEST & CALVES</td>
+                    <td>Barbell Flat Bench Press, Incline Dumbbell Press, Cable Crossover, Machine Calf Press</td>
+                    <td>4x6–8, 3x8–10, 3x12–15, 5x10–15</td>
+                    <td><strong>Forced Reps</strong> on Bench. Controlled Negatives on DB Press. Intra-set stretching on Crossovers.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 2</td>
+                    <td>BACK</td>
+                    <td>Weighted Pull-ups, Barbell Bent-Over Row (Heavy), Lat Pulldown (V-Bar), Machine Pullover</td>
+                    <td>4x8–10, 4x6–8, 3x10–12, 3x12–15</td>
+                    <td>Failure set on Pull-ups. Heavy, strict form on Barbell Row.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 3</td>
+                    <td>LEGS (Full)</td>
+                    <td>Barbell Squat (High Bar), Leg Press, Seated Leg Curl, Leg Extension</td>
+                    <td>4x6–8, 3x10 + Drop x 2, 3x10–12, 3x15 + Rest Pause</td>
+                    <td>Heavy load on Squat. <strong>Triple Drop Set</strong> on Leg Press. <strong>Rest-Pause Finisher</strong> on Extensions.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 4</td>
+                    <td><strong>OFF</strong></td>
+                    <td><strong>ACTIVE RECOVERY</strong></td>
+                    <td>—</td>
+                    <td>Light cardio, deep stretching, joint mobility work.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 5</td>
+                    <td>SHOULDERS & ARMS</td>
+                    <td>Seated Dumbbell Press, Dumbbell Lateral Raise, Bent Over Rear Delt Fly, <strong>Arm Giant Set</strong></td>
+                    <td>4x8–10, 4x10–15, 3x15, 3 rounds of 10 reps</td>
+                    <td><strong>Forced Reps</strong> on DB Press. <strong>Giant Set:</strong> Barbell Curl, Tricep Extension, Hammer Curl, Rope Pushdown (No rest).</td>
+                  </tr>
+                  <tr>
+                    <td>Day 6</td>
+                    <td><strong>OFF</strong></td>
+                    <td><strong>REST</strong></td>
+                    <td>—</td>
+                    <td>Full recovery.</td>
+                  </tr>
+                  <tr>
+                    <td>Day 7</td>
+                    <td><strong>OFF</strong></td>
+                    <td><strong>REST</strong></td>
+                    <td>—</td>
+                    <td>Full recovery.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Pharmacology Content --><section id="content-3" class="tab-content">
+          <div class="color-code-box compounds">
+            <h2>Compound Protocol</h2>
+            <p style="color:var(--danger); font-weight:700; text-transform:uppercase; margin:0 0 20px;">
+              EOD Injection Schedule (adjust by bloodwork only)
+            </p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Compound</th>
+                    <th>Weekly Dose</th>
+                    <th>Phase 1 (Weeks 1–4)</th>
+                    <th>Phase 2 (Weeks 5–12)</th>
+                    <th>Phase 3 (Weeks 13–20)</th>
+                    <th>Rationale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Compound"><strong>Testosterone (E/C)</strong></td>
+                    <td data-label="Weekly Dose"><span class="data-label">200 mg</span></td>
+                    <td>200 mg</td>
+                    <td>200 mg</td>
+                    <td>200 mg</td>
+                    <td>TRT base</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Compound"><strong>Primobolan</strong></td>
+                    <td data-label="Weekly Dose"><span class="data-label">600 mg</span></td>
+                    <td>400 mg</td>
+                    <td>600 mg</td>
+                    <td>600 mg</td>
+                    <td>Clean anabolism / recomp</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Compound"><strong>Nandrolone Decanoate</strong></td>
+                    <td data-label="Weekly Dose"><span class="data-label">500 mg</span></td>
+                    <td>0 mg</td>
+                    <td>400 mg</td>
+                    <td>500 mg</td>
+                    <td>Joint support</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Compound"><strong>BPC-157 (Peptide)</strong></td>
+                    <td data-label="Weekly Dose"><span class="data-label">500 µg daily</span></td>
+                    <td>Daily</td>
+                    <td>As needed</td>
+                    <td>As needed</td>
+                    <td>Proactive tissue repair</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Diet Content --><section id="content-4" class="tab-content">
+          <div class="color-code-box nutrition">
+            <h2>Nutrition & Recovery Strategy</h2>
+            <p style="color:var(--info); font-weight:700; text-transform:uppercase; margin:0 0 20px;">
+              Precision Carb Cycling for Hypertrophy & Fat Loss
+            </p>
+
+            <div class="phase-grid">
+              <div>
+                <h3>Macro Constants</h3>
+                <ul>
+                  <li><strong>Protein:</strong> <span class="data-label">308 g minimum</span> (≈1.5 g/lb)</li>
+                  <li><strong>Sleep:</strong> <span class="data-label">9 hours</span></li>
+                  <li><strong>Meal Prep:</strong> Non-negotiable for adherence</li>
+                </ul>
+                <h3>Supplementation</h3>
+                <ul>
+                  <li><strong>Creatine:</strong> 5 g daily</li>
+                  <li><strong>Intra-Workout:</strong> EAAs + fast carbs (high days)</li>
+                  <li><strong>Post-Workout:</strong> Protein isolate + <span class="data-label">75–100 g HGC</span> (high days)</li>
+                  <li><strong>Omega-3s:</strong> 4–6 g EPA/DHA daily</li>
+                </ul>
+              </div>
+
+              <div style="grid-column: span 2;">
+                <h3>Carb Cycling Summary</h3>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Phase</th>
+                        <th>Day Type</th>
+                        <th>Carbs (C)</th>
+                        <th>Fat (F)</th>
+                        <th>Calorie Goal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td rowspan="2"><strong>Phase 1</strong><br/>(Weeks 1–4)</td>
+                        <td>High (Training)</td>
+                        <td>250 g</td>
+                        <td>65 g</td>
+                        <td><span class="data-label">~2,900 kcal</span> (slight surplus)</td>
+                      </tr>
+                      <tr>
+                        <td>Low (Rest)</td>
+                        <td>50 g</td>
+                        <td>80 g</td>
+                        <td><span class="data-label">~2,200 kcal</span> (moderate deficit)</td>
+                      </tr>
+                       <tr>
+                        <td rowspan="2"><strong>Phase 2</strong><br/>(Weeks 5–12)</td>
+                        <td>High (Training)</td>
+                        <td>375 g</td>
+                        <td>75 g</td>
+                        <td><span class="data-label">~3,500 kcal</span> (solid surplus)</td>
+                      </tr>
+                      <tr>
+                        <td>Low (Rest)</td>
+                        <td>75 g</td>
+                        <td>90 g</td>
+                        <td><span class="data-label">~2,500 kcal</span> (slight deficit)</td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2"><strong>Phase 3</strong><br/>(Weeks 13–20)</td>
+                        <td>High (Training)</td>
+                        <td>500 g</td>
+                        <td>80 g</td>
+                        <td><span class="data-label">~4,100 kcal</span> (high anabolic surplus)</td>
+                      </tr>
+                      <tr>
+                        <td>Low (Rest)</td>
+                        <td>100 g</td>
+                        <td>70 g</td>
+                        <td><span class="data-label">~2,300 kcal</span> (sharpening deficit)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+    </div>
+    <!-- END PURE CSS TAB IMPLEMENTATION --></main>
+</body>
+</html>
