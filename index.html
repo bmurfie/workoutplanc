@@ -154,7 +154,7 @@
 
     .tab-labels {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
       margin-bottom: 32px;
     }
@@ -242,7 +242,8 @@
     #tab-1:checked ~ #content-1,
     #tab-2:checked ~ #content-2,
     #tab-3:checked ~ #content-3,
-    #tab-4:checked ~ #content-4 {
+    #tab-4:checked ~ #content-4,
+    #tab-5:checked ~ #content-5 {
       display: block;
     }
 
@@ -297,6 +298,11 @@
     .compounds::before { 
       background: linear-gradient(90deg, var(--danger), transparent);
       box-shadow: 0 0 24px var(--danger-glow);
+    }
+
+    .tracker::before {
+      background: linear-gradient(90deg, var(--success), transparent);
+      box-shadow: 0 0 24px rgba(81, 207, 102, 0.25);
     }
 
     /* Lists */
@@ -398,6 +404,280 @@
       font-weight: 600;
     }
 
+    /* Rest Timer Styles */
+    .rest-timer-container {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 32px;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      max-width: 600px;
+      margin: 24px auto 0;
+    }
+
+    .timer-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      color: var(--accent);
+      text-shadow: 0 0 30px var(--accent-glow);
+      margin-bottom: 24px;
+      letter-spacing: 4px;
+    }
+
+    .timer-display.running {
+      color: var(--success);
+      text-shadow: 0 0 30px rgba(81, 207, 102, 0.5);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .timer-display.finished {
+      color: var(--danger);
+      text-shadow: 0 0 30px var(--danger-glow);
+      animation: flash 0.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .timer-preset {
+      padding: 12px 20px;
+      background: var(--panel-2);
+      border: var(--border-glass);
+      border-radius: 8px;
+      color: var(--ink);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .timer-preset:hover {
+      background: var(--panel-hover);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .timer-custom {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .timer-custom input {
+      padding: 12px 16px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .timer-custom input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .timer-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .timer-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .timer-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), var(--info));
+      width: 0%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--accent), rgba(255, 184, 77, 0.8));
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--info), rgba(79, 195, 247, 0.8));
+      box-shadow: 0 4px 12px var(--info-glow);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), rgba(255, 107, 107, 0.8));
+      box-shadow: 0 4px 12px var(--danger-glow);
+    }
+
+    /* Tracker Specific Styles */
+    .tracker-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .exercise-entry {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    .exercise-entry:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .exercise-entry h4 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .set-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .set-input-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    .set-input-group label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 60px;
+      font-weight: 600;
+    }
+
+    .set-input-group input {
+      padding: 10px 12px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .set-input-group input:focus {
+      outline: none;
+      border-color: var(--success);
+      box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.2);
+    }
+
+    .set-input-group input.completed {
+      border-color: var(--success);
+      background: rgba(81, 207, 102, 0.1);
+    }
+
+    .workout-history {
+      margin-top: 32px;
+    }
+
+    .history-entry {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 16px 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--success);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .history-entry:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: translateX(4px);
+    }
+
+    .history-date {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .history-workout {
+      color: var(--info);
+    }
+
+    .history-delete {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .history-delete:hover {
+      background: rgba(255, 107, 107, 0.2);
+    }
+
+
     /* Responsive */
     @media (max-width: 768px) {
       .container {
@@ -460,12 +740,14 @@
         <input type="radio" name="tabs" id="tab-2" class="tab-input" />
         <input type="radio" name="tabs" id="tab-3" class="tab-input" />
         <input type="radio" name="tabs" id="tab-4" class="tab-input" />
+        <input type="radio" name="tabs" id="tab-5" class="tab-input" />
 
         <!-- Tab Labels --><div class="tab-labels">
             <label for="tab-1" class="tab-label">📊 Overview</label>
             <label for="tab-2" class="tab-label">💪 Training</label>
             <label for="tab-3" class="tab-label">💉 Pharmacology</label>
             <label for="tab-4" class="tab-label">🍽️ Diet</label>
+            <label for="tab-5" class="tab-label">📈 Workout Tracker</label>
         </div>
 
         <hr class="divider" />
@@ -529,23 +811,23 @@
                   <tr>
                     <td>Day 1</td>
                     <td>Upper (Pull Focus)</td>
-                    <td>Machine Pullover, Seated Cable Row, Cable Face Pull, Hammer Curl (Machines), Cable Tricep Pushdown</td>
-                    <td>3x15–20, 3x15–20, 3x20, 3x15–20, 3x15–20</td>
-                    <td>Controlled 3s negative on rows. High-rep rotator cuff activation.</td>
+                    <td>Machine Pullover, Seated Cable Row, Cable Face Pull, Hammer Curl, Cable Tricep Pushdown</td>
+                    <td>2x Failure, 2x Failure, 1x Failure, 1x Failure, 1x Failure</td>
+                    <td>3s negatives on compound movements. Total muscular failure each set.</td>
                   </tr>
                   <tr>
                     <td>Day 2</td>
                     <td>Lower (Quad Focus)</td>
-                    <td>Leg Extension (Pre-Exhaust), Leg Press, Standing Calf Raise, Machine Hip Adduction</td>
-                    <td>3x15–20, 3x15–20, 4x20, 3x20</td>
-                    <td>Feet low on leg press, deep stretch.</td>
+                    <td>Leg Extension, Leg Press, Standing Calf Raise, Machine Hip Adduction</td>
+                    <td>1x Failure, 2x Failure, 2x Failure, 1x Failure</td>
+                    <td>Pre-exhaust with leg extension. Feet low on leg press for quad emphasis.</td>
                   </tr>
                   <tr>
                     <td>Day 3</td>
                     <td>Upper (Push Focus)</td>
                     <td>Incline Dumbbell Press, Pec Deck Fly, Dumbbell Lateral Raise, Machine Overhead Press</td>
-                    <td>3x15–20, 3x15–20, 3x20, 3x15–20</td>
-                    <td>Light, strict control. Maximize blood flow with flyes and raises.</td>
+                    <td>2x Failure, 1x Failure, 1x Failure, 2x Failure</td>
+                    <td>Controlled eccentric. Focus on stretch and contraction.</td>
                   </tr>
                   <tr>
                     <td>Day 4</td>
@@ -557,23 +839,23 @@
                   <tr>
                     <td>Day 5</td>
                     <td>Full Body Primer</td>
-                    <td>Goblet Squat (Deep Stretch), Dumbbell Bench Press, Cable Row (Wide Grip), EZ Bar Curl / Pushdown (Superset)</td>
-                    <td>3x15, 3x15, 3x15, 2x20 (each)</td>
-                    <td>Focus on deep stretch in the squat. Arm finisher.</td>
+                    <td>Goblet Squat, Dumbbell Bench Press, Cable Row, EZ Bar Curl, Pushdown</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure, 1x Failure</td>
+                    <td>Deep stretch on squat. Arm exercises superset optional.</td>
                   </tr>
                   <tr>
                     <td>Day 6</td>
                     <td>Lower (Ham Focus)</td>
                     <td>Seated Leg Curl, 45-Degree Hyperextension, Seated Calf Raise, Hanging Leg Raise</td>
-                    <td>3x15–20, 3x15–20, 4x20, 3x15</td>
-                    <td>Focus on glute/ham contraction on hyperextensions.</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure</td>
+                    <td>Maximize glute/ham contraction on hyperextensions.</td>
                   </tr>
                   <tr>
                     <td>Day 7</td>
                     <td>Upper (Volume Pump)</td>
-                    <td>Cable Crossover (High to Low), Dumbbell Pullover, Seated Dumbbell Curl, Rope Tricep Extension</td>
-                    <td>3x15, 3x15, 3x15, 3x15</td>
-                    <td>High frequency arm work.</td>
+                    <td>Cable Crossover, Dumbbell Pullover, Seated Dumbbell Curl, Rope Tricep Extension</td>
+                    <td>1x Failure, 1x Failure, 1x Failure, 1x Failure</td>
+                    <td>High frequency arm work. Focus on peak contraction.</td>
                   </tr>
                 </tbody>
               </table>
@@ -581,7 +863,7 @@
 
             <!-- Phase 2 Training -->
             <h3>Phase 2: Intensity Drive (Weeks 5–12)</h3>
-            <p class="muted"><strong>RPE 8–9 (1–2 reps in reserve), 8–12 Reps.</strong> Introduce Nandrolone, BFR, and higher loads.</p>
+            <p class="muted"><strong>Complete Muscular Failure.</strong> Introduce Nandrolone. High intensity, low volume.</p>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -598,43 +880,43 @@
                     <td>Day 1</td>
                     <td>PUSH (Chest/Shoulders/Tri)</td>
                     <td>Barbell Incline Press, Flat Dumbbell Press, Seated Dumbbell OHP, Lateral Raise, Cable Tricep Pushdown, Skull Crusher</td>
-                    <td>4x8–10, 3x10–12, 3x8–10, 4x12–15, 3x10, 1x8 + Drop x 2</td>
-                    <td>Controlled negative on incline press. <strong>Drop Set</strong> on Skull Crushers.</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure, 1x Failure, 1x Failure + Drop</td>
+                    <td>Slow eccentrics on compounds. Drop set on skull crushers to complete failure.</td>
                   </tr>
                   <tr>
                     <td>Day 2</td>
                     <td>PULL (Back/Biceps)</td>
-                    <td>Weighted Pull-up/Lat Pulldown, T-Bar Row (Heavy), Cable Seated Row, Dumbbell Shrug, Barbell Curl, Cable Curl</td>
-                    <td>4x8–10, 4x8–10, 3x10–12, 3x12, 3x8–10, 1x100 Reps</td>
-                    <td>Focus on stretch/squeeze on rows. <strong>Rest-Pause Finisher</strong> on Cable Curl.</td>
+                    <td>Weighted Pull-up, T-Bar Row, Cable Seated Row, Dumbbell Shrug, Barbell Curl, Cable Curl</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure, 1x Failure, 1x Failure</td>
+                    <td>Maximum stretch and contraction on rows. Rest-pause on final curl set.</td>
                   </tr>
                   <tr>
                     <td>Day 3</td>
                     <td>LEGS (Quad Focus)</td>
                     <td>Barbell Squat, Hack Squat/Leg Press, Leg Extension, Walking Lunge</td>
-                    <td>4x8–10, 3x12–15, 3x12–15, 3x15 (per leg)</td>
-                    <td>Controlled depth on squats. Walking Lunge finisher.</td>
+                    <td>2x Failure, 2x Failure, 1x Failure, 1x Failure</td>
+                    <td>Full depth squats. Controlled eccentric on leg press.</td>
                   </tr>
                   <tr>
                     <td>Day 4</td>
                     <td>PUSH (Shoulders/Chest/Tri)</td>
-                    <td>Machine Overhead Press, Pec Deck Fly, Cable Lateral Raise, Rope Tricep Extension, <strong>BFR Tricep Pushdown</strong></td>
-                    <td>3x10–12, 3x12–15, 3x15, 3x12, 3x30</td>
-                    <td>High volume delts. <strong>Blood Flow Restriction (BFR)</strong> finisher.</td>
+                    <td>Machine Overhead Press, Pec Deck Fly, Cable Lateral Raise, Rope Tricep Extension</td>
+                    <td>2x Failure, 1x Failure, 1x Failure, 1x Failure</td>
+                    <td>Maximize delt contraction. Stretch emphasis on flyes.</td>
                   </tr>
                   <tr>
                     <td>Day 5</td>
                     <td>PULL (Thickness/Biceps)</td>
-                    <td>Romanian Deadlift (RDL), Dumbbell Pullover, Single-Arm Dumbbell Row (Heavy), Hammer Curl, <strong>BFR Cable Curl</strong></td>
-                    <td>4x8–10, 3x12, 3x10–12, 3x10, 3x30</td>
-                    <td>Focus on hamstring stretch on RDL. <strong>BFR</strong> finisher.</td>
+                    <td>Romanian Deadlift, Dumbbell Pullover, Single-Arm Dumbbell Row, Hammer Curl</td>
+                    <td>2x Failure, 1x Failure, 2x Failure, 1x Failure</td>
+                    <td>Deep hamstring stretch on RDLs. Heavy controlled rows.</td>
                   </tr>
                   <tr>
                     <td>Day 6</td>
                     <td>LEGS (Ham Focus)</td>
-                    <td>Lying/Seated Leg Curl, Stiff-Legged Deadlift (DB), Calf Press (Leg Press), Hanging Leg Raise</td>
-                    <td>4x10–12, 3x10–12, 4x15, 3x15</td>
-                    <td>Deep stretch on Stiff-Legged Deadlifts.</td>
+                    <td>Lying Leg Curl, Stiff-Legged Deadlift, Calf Press, Hanging Leg Raise</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure</td>
+                    <td>Maximum stretch on stiff-legged deadlifts.</td>
                   </tr>
                   <tr>
                     <td>Day 7</td>
@@ -649,7 +931,7 @@
 
             <!-- Phase 3 Training -->
             <h3>Phase 3: Peak Overload (Weeks 13–20)</h3>
-            <p class="muted"><strong>RPE 9–10 (Failure sets), 6–12 Reps.</strong> Body-Part Split. Maximize advanced techniques.</p>
+            <p class="muted"><strong>Maximum Intensity - Train to Complete Failure.</strong> Body-part split with advanced techniques.</p>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -666,22 +948,22 @@
                     <td>Day 1</td>
                     <td>CHEST & CALVES</td>
                     <td>Barbell Flat Bench Press, Incline Dumbbell Press, Cable Crossover, Machine Calf Press</td>
-                    <td>4x6–8, 3x8–10, 3x12–15, 5x10–15</td>
-                    <td><strong>Forced Reps</strong> on Bench. Controlled Negatives on DB Press. Intra-set stretching on Crossovers.</td>
+                    <td>2x Failure, 2x Failure, 1x Failure, 2x Failure</td>
+                    <td>Forced reps optional on final bench set. 3-5s eccentric on DB press.</td>
                   </tr>
                   <tr>
                     <td>Day 2</td>
                     <td>BACK</td>
-                    <td>Weighted Pull-ups, Barbell Bent-Over Row (Heavy), Lat Pulldown (V-Bar), Machine Pullover</td>
-                    <td>4x8–10, 4x6–8, 3x10–12, 3x12–15</td>
-                    <td>Failure set on Pull-ups. Heavy, strict form on Barbell Row.</td>
+                    <td>Weighted Pull-ups, Barbell Bent-Over Row, Lat Pulldown, Machine Pullover</td>
+                    <td>2x Failure, 2x Failure, 2x Failure, 1x Failure</td>
+                    <td>Add weight until failure at 6-10 reps. Strict form paramount.</td>
                   </tr>
                   <tr>
                     <td>Day 3</td>
                     <td>LEGS (Full)</td>
-                    <td>Barbell Squat (High Bar), Leg Press, Seated Leg Curl, Leg Extension</td>
-                    <td>4x6–8, 3x10 + Drop x 2, 3x10–12, 3x15 + Rest Pause</td>
-                    <td>Heavy load on Squat. <strong>Triple Drop Set</strong> on Leg Press. <strong>Rest-Pause Finisher</strong> on Extensions.</td>
+                    <td>Barbell Squat, Leg Press, Seated Leg Curl, Leg Extension</td>
+                    <td>2x Failure, 2x Failure + Drop, 2x Failure, 1x Failure</td>
+                    <td>Heavy squats. Double drop set on leg press to absolute failure.</td>
                   </tr>
                   <tr>
                     <td>Day 4</td>
@@ -693,9 +975,9 @@
                   <tr>
                     <td>Day 5</td>
                     <td>SHOULDERS & ARMS</td>
-                    <td>Seated Dumbbell Press, Dumbbell Lateral Raise, Bent Over Rear Delt Fly, <strong>Arm Giant Set</strong></td>
-                    <td>4x8–10, 4x10–15, 3x15, 3 rounds of 10 reps</td>
-                    <td><strong>Forced Reps</strong> on DB Press. <strong>Giant Set:</strong> Barbell Curl, Tricep Extension, Hammer Curl, Rope Pushdown (No rest).</td>
+                    <td>Seated Dumbbell Press, Dumbbell Lateral Raise, Bent Over Rear Delt Fly, Barbell Curl, Tricep Extension, Hammer Curl, Rope Pushdown</td>
+                    <td>2x Failure, 1x Failure, 1x Failure, 1x Failure, 1x Failure, 1x Failure, 1x Failure</td>
+                    <td>Can superset arms (Curl + Extension, Hammer + Pushdown) for efficiency.</td>
                   </tr>
                   <tr>
                     <td>Day 6</td>
@@ -860,7 +1142,578 @@
             </div>
           </div>
         </section>
+
+        <!-- 5. Timer Content -->
+        <section id="content-5" class="tab-content">
+          <div class="color-code-box tracker">
+            <h2 style="text-align: center;">⏱️ Rest Timer & Workout Tracker</h2>
+            <p style="color:var(--success); font-weight:700; text-transform:uppercase; text-align:center; margin:0 0 32px;">
+              Track Your Rest Periods & Log Your Workouts
+            </p>
+
+            <!-- Rest Timer -->
+            <div class="rest-timer-container" style="margin-bottom: 48px;">
+              <h3 style="text-align: center; color: var(--accent); margin-bottom: 20px;">Rest Timer</h3>
+              <div class="timer-display" id="timerDisplay">0:00</div>
+              <div class="timer-controls">
+                <button class="timer-preset" onclick="setTimer(30)">30s</button>
+                <button class="timer-preset" onclick="setTimer(60)">1min</button>
+                <button class="timer-preset" onclick="setTimer(90)">1:30</button>
+                <button class="timer-preset" onclick="setTimer(120)">2min</button>
+                <button class="timer-preset" onclick="setTimer(180)">3min</button>
+              </div>
+              <div class="timer-custom">
+                <input type="number" id="customMinutes" placeholder="Min" min="0" max="10" value="0" style="width:70px;" />
+                <input type="number" id="customSeconds" placeholder="Sec" min="0" max="59" value="0" style="width:70px;" />
+                <button class="btn btn-secondary" onclick="setCustomTimer()">Set Custom</button>
+              </div>
+              <div class="timer-buttons">
+                <button class="btn" id="startBtn" onclick="startTimer()">▶️ Start</button>
+                <button class="btn btn-danger" onclick="resetTimer()">⏹️ Reset</button>
+              </div>
+              <div class="timer-progress-bar">
+                <div class="timer-progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <!-- Workout Tracker -->
+            <div style="padding-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
+              <h3 style="text-align: center; color: var(--info); margin-bottom: 24px;">Workout Logger</h3>
+              
+              <div class="tracker-controls">
+                <div>
+                  <label for="phase-select" style="display:block; margin-bottom:6px; color:var(--muted); font-size:0.85rem; text-transform:uppercase;">Select Phase</label>
+                  <select id="phase-select" style="padding: 12px 16px; background: var(--panel-2); border: var(--border-glass); border-radius: 8px; color: var(--ink); font-family: 'Inter', sans-serif; font-size: 0.95rem; min-width: 200px; cursor: pointer;">
+                    <option value="phase1">Phase 1: Re-Awakening (Weeks 1-4)</option>
+                    <option value="phase2">Phase 2: Intensity Drive (Weeks 5-12)</option>
+                    <option value="phase3">Phase 3: Peak Overload (Weeks 13-20)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="day-select" style="display:block; margin-bottom:6px; color:var(--muted); font-size:0.85rem; text-transform:uppercase;">Select Day</label>
+                  <select id="day-select" style="padding: 12px 16px; background: var(--panel-2); border: var(--border-glass); border-radius: 8px; color: var(--ink); font-family: 'Inter', sans-serif; font-size: 0.95rem; min-width: 200px; cursor: pointer;">
+                    <!-- Populated by JavaScript -->
+                  </select>
+                </div>
+                <div>
+                  <label for="workout-date" style="display:block; margin-bottom:6px; color:var(--muted); font-size:0.85rem; text-transform:uppercase;">Workout Date</label>
+                  <input type="date" id="workout-date" style="padding: 12px 16px; background: var(--panel-2); border: var(--border-glass); border-radius: 8px; color: var(--ink); font-family: 'Inter', sans-serif; font-size: 0.95rem;" />
+                </div>
+              </div>
+
+              <div id="workout-form" style="margin-top: 24px;">
+                <!-- Populated by JavaScript -->
+              </div>
+
+              <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+                <button class="btn" onclick="saveWorkout()">💾 Save Workout</button>
+                <button class="btn btn-secondary" onclick="loadWorkout()">📂 Load Last Workout</button>
+                <button class="btn btn-danger" onclick="clearWorkout()">🗑️ Clear Form</button>
+              </div>
+
+              <div class="workout-history" style="margin-top: 32px;">
+                <h3>Workout History</h3>
+                <div id="history-list">
+                  <!-- Populated by JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
     <!-- END PURE CSS TAB IMPLEMENTATION --></main>
+
+  <script>
+    // Rest Timer Variables
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let totalSeconds = 0;
+    let isPaused = false;
+    const timerAudio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDGH0fPTgjMGHm7A7+OZRQ0PVa3n8K1dGgxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQ0OVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQ0OVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQwPVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQ0OVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQ0OVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZRQ0OVK3n8K1dGQxKpuPyvmoeAzCC0fPTgjQGIXLC7+OZ');
+
+    // Rest Timer Functions
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function setTimer(seconds) {
+      timerSeconds = seconds;
+      totalSeconds = seconds;
+      document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('timerDisplay').classList.remove('running', 'finished');
+      document.getElementById('startBtn').textContent = '▶️ Start';
+      isPaused = false;
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function setCustomTimer() {
+      const mins = parseInt(document.getElementById('customMinutes').value) || 0;
+      const secs = parseInt(document.getElementById('customSeconds').value) || 0;
+      const totalSecs = (mins * 60) + secs;
+      if (totalSecs > 0) {
+        setTimer(totalSecs);
+      } else {
+        alert('Please enter a valid time!');
+      }
+    }
+
+    function startTimer() {
+      const timerDisplay = document.getElementById('timerDisplay');
+      const startBtn = document.getElementById('startBtn');
+      
+      if (timerSeconds === 0 && !isPaused) {
+        alert('Please set a timer first!');
+        return;
+      }
+
+      if (timerInterval) {
+        // Pause
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isPaused = true;
+        startBtn.textContent = '▶️ Resume';
+        timerDisplay.classList.remove('running');
+      } else {
+        // Start/Resume
+        isPaused = false;
+        startBtn.textContent = '⏸️ Pause';
+        timerDisplay.classList.add('running');
+        timerDisplay.classList.remove('finished');
+        
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+          
+          // Update progress bar
+          const percentage = (timerSeconds / totalSeconds) * 100;
+          document.getElementById('progressFill').style.width = percentage + '%';
+          
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerDisplay.classList.remove('running');
+            timerDisplay.classList.add('finished');
+            startBtn.textContent = '▶️ Start';
+            
+            // Play sound
+            try {
+              timerAudio.play();
+            } catch (e) {
+              console.log('Audio play failed:', e);
+            }
+            
+            // Show notification if supported
+            if ('Notification' in window && Notification.permission === 'granted') {
+              new Notification('Rest Timer Complete!', {
+                body: 'Time to start your next set!',
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="75" font-size="80">⏱️</text></svg>'
+              });
+            } else {
+              alert('⏱️ Rest time is up! Ready for your next set!');
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      timerSeconds = totalSeconds;
+      isPaused = false;
+      document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+      document.getElementById('timerDisplay').classList.remove('running', 'finished');
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('startBtn').textContent = '▶️ Start';
+    }
+
+    // Request notification permission on load
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Workout Tracker JavaScript
+    const workoutData = {
+      phase1: {
+        day1: { name: "Day 1: Upper (Pull Focus)", exercises: [
+          { name: "Machine Pullover", sets: 2, reps: "Failure" },
+          { name: "Seated Cable Row", sets: 2, reps: "Failure" },
+          { name: "Cable Face Pull", sets: 1, reps: "Failure" },
+          { name: "Hammer Curl", sets: 1, reps: "Failure" },
+          { name: "Cable Tricep Pushdown", sets: 1, reps: "Failure" }
+        ]},
+        day2: { name: "Day 2: Lower (Quad Focus)", exercises: [
+          { name: "Leg Extension", sets: 1, reps: "Failure" },
+          { name: "Leg Press", sets: 2, reps: "Failure" },
+          { name: "Standing Calf Raise", sets: 2, reps: "Failure" },
+          { name: "Machine Hip Adduction", sets: 1, reps: "Failure" }
+        ]},
+        day3: { name: "Day 3: Upper (Push Focus)", exercises: [
+          { name: "Incline Dumbbell Press", sets: 2, reps: "Failure" },
+          { name: "Pec Deck Fly", sets: 1, reps: "Failure" },
+          { name: "Dumbbell Lateral Raise", sets: 1, reps: "Failure" },
+          { name: "Machine Overhead Press", sets: 2, reps: "Failure" }
+        ]},
+        day5: { name: "Day 5: Full Body Primer", exercises: [
+          { name: "Goblet Squat", sets: 2, reps: "Failure" },
+          { name: "Dumbbell Bench Press", sets: 2, reps: "Failure" },
+          { name: "Cable Row", sets: 2, reps: "Failure" },
+          { name: "EZ Bar Curl", sets: 1, reps: "Failure" },
+          { name: "Pushdown", sets: 1, reps: "Failure" }
+        ]},
+        day6: { name: "Day 6: Lower (Ham Focus)", exercises: [
+          { name: "Seated Leg Curl", sets: 2, reps: "Failure" },
+          { name: "45-Degree Hyperextension", sets: 2, reps: "Failure" },
+          { name: "Seated Calf Raise", sets: 2, reps: "Failure" },
+          { name: "Hanging Leg Raise", sets: 1, reps: "Failure" }
+        ]},
+        day7: { name: "Day 7: Upper (Volume Pump)", exercises: [
+          { name: "Cable Crossover", sets: 1, reps: "Failure" },
+          { name: "Dumbbell Pullover", sets: 1, reps: "Failure" },
+          { name: "Seated Dumbbell Curl", sets: 1, reps: "Failure" },
+          { name: "Rope Tricep Extension", sets: 1, reps: "Failure" }
+        ]}
+      },
+      phase2: {
+        day1: { name: "Day 1: PUSH", exercises: [
+          { name: "Barbell Incline Press", sets: 2, reps: "Failure" },
+          { name: "Flat Dumbbell Press", sets: 2, reps: "Failure" },
+          { name: "Seated Dumbbell OHP", sets: 2, reps: "Failure" },
+          { name: "Lateral Raise", sets: 1, reps: "Failure" },
+          { name: "Cable Tricep Pushdown", sets: 1, reps: "Failure" },
+          { name: "Skull Crusher", sets: 1, reps: "Failure + Drop" }
+        ]},
+        day2: { name: "Day 2: PULL", exercises: [
+          { name: "Weighted Pull-up", sets: 2, reps: "Failure" },
+          { name: "T-Bar Row", sets: 2, reps: "Failure" },
+          { name: "Cable Seated Row", sets: 2, reps: "Failure" },
+          { name: "Dumbbell Shrug", sets: 1, reps: "Failure" },
+          { name: "Barbell Curl", sets: 1, reps: "Failure" },
+          { name: "Cable Curl", sets: 1, reps: "Failure" }
+        ]},
+        day3: { name: "Day 3: LEGS (Quad)", exercises: [
+          { name: "Barbell Squat", sets: 2, reps: "Failure" },
+          { name: "Hack Squat", sets: 2, reps: "Failure" },
+          { name: "Leg Extension", sets: 1, reps: "Failure" },
+          { name: "Walking Lunge", sets: 1, reps: "Failure" }
+        ]},
+        day4: { name: "Day 4: PUSH", exercises: [
+          { name: "Machine Overhead Press", sets: 2, reps: "Failure" },
+          { name: "Pec Deck Fly", sets: 1, reps: "Failure" },
+          { name: "Cable Lateral Raise", sets: 1, reps: "Failure" },
+          { name: "Rope Tricep Extension", sets: 1, reps: "Failure" }
+        ]},
+        day5: { name: "Day 5: PULL", exercises: [
+          { name: "Romanian Deadlift", sets: 2, reps: "Failure" },
+          { name: "Dumbbell Pullover", sets: 1, reps: "Failure" },
+          { name: "Single-Arm DB Row", sets: 2, reps: "Failure" },
+          { name: "Hammer Curl", sets: 1, reps: "Failure" }
+        ]},
+        day6: { name: "Day 6: LEGS (Ham)", exercises: [
+          { name: "Lying Leg Curl", sets: 2, reps: "Failure" },
+          { name: "Stiff-Legged Deadlift", sets: 2, reps: "Failure" },
+          { name: "Calf Press", sets: 2, reps: "Failure" },
+          { name: "Hanging Leg Raise", sets: 1, reps: "Failure" }
+        ]}
+      },
+      phase3: {
+        day1: { name: "Day 1: CHEST & CALVES", exercises: [
+          { name: "Barbell Flat Bench", sets: 2, reps: "Failure" },
+          { name: "Incline Dumbbell Press", sets: 2, reps: "Failure" },
+          { name: "Cable Crossover", sets: 1, reps: "Failure" },
+          { name: "Machine Calf Press", sets: 2, reps: "Failure" }
+        ]},
+        day2: { name: "Day 2: BACK", exercises: [
+          { name: "Weighted Pull-ups", sets: 2, reps: "Failure" },
+          { name: "Barbell Bent-Over Row", sets: 2, reps: "Failure" },
+          { name: "Lat Pulldown", sets: 2, reps: "Failure" },
+          { name: "Machine Pullover", sets: 1, reps: "Failure" }
+        ]},
+        day3: { name: "Day 3: LEGS (Full)", exercises: [
+          { name: "Barbell Squat", sets: 2, reps: "Failure" },
+          { name: "Leg Press", sets: 2, reps: "Failure + Drop" },
+          { name: "Seated Leg Curl", sets: 2, reps: "Failure" },
+          { name: "Leg Extension", sets: 1, reps: "Failure" }
+        ]},
+        day5: { name: "Day 5: SHOULDERS & ARMS", exercises: [
+          { name: "Seated Dumbbell Press", sets: 2, reps: "Failure" },
+          { name: "Dumbbell Lateral Raise", sets: 1, reps: "Failure" },
+          { name: "Bent Over Rear Delt Fly", sets: 1, reps: "Failure" },
+          { name: "Barbell Curl", sets: 1, reps: "Failure" },
+          { name: "Tricep Extension", sets: 1, reps: "Failure" },
+          { name: "Hammer Curl", sets: 1, reps: "Failure" },
+          { name: "Rope Pushdown", sets: 1, reps: "Failure" }
+        ]}
+      }
+    };
+
+    // Initialize tracker
+    function initTracker() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('workout-date').value = today;
+      updateDaySelect();
+      loadWorkoutForm();
+      loadHistory();
+    }
+
+    // Update day select based on phase
+    function updateDaySelect() {
+      const phaseSelect = document.getElementById('phase-select');
+      const daySelect = document.getElementById('day-select');
+      const phase = phaseSelect.value;
+      
+      daySelect.innerHTML = '';
+      const days = workoutData[phase];
+      
+      for (const [key, value] of Object.entries(days)) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value.name;
+        daySelect.appendChild(option);
+      }
+      
+      loadWorkoutForm();
+    }
+
+    // Load workout form
+    function loadWorkoutForm() {
+      const phase = document.getElementById('phase-select').value;
+      const day = document.getElementById('day-select').value;
+      const workoutForm = document.getElementById('workout-form');
+      
+      if (!day) return;
+      
+      const workout = workoutData[phase][day];
+      let html = `<h3 style="margin-top:24px;">${workout.name}</h3>`;
+      
+      workout.exercises.forEach((exercise, index) => {
+        html += `
+          <div class="exercise-entry">
+            <h4>${exercise.name}</h4>
+            <p class="muted" style="margin:0 0 12px;">Target: ${exercise.sets} sets × ${exercise.reps}</p>
+            <div class="set-inputs">
+        `;
+        
+        for (let i = 1; i <= exercise.sets; i++) {
+          html += `
+            <div class="set-input-group">
+              <label>Set ${i}</label>
+              <input 
+                type="text" 
+                placeholder="Weight" 
+                id="ex${index}_set${i}_weight"
+                onchange="markCompleted(this, ${index}, ${i})"
+                style="flex: 1; min-width: 100px;"
+              />
+              <input 
+                type="text" 
+                placeholder="Reps" 
+                id="ex${index}_set${i}_reps"
+                onchange="markCompleted(this, ${index}, ${i})"
+                style="flex: 1; min-width: 100px;"
+              />
+            </div>
+          `;
+        }
+        
+        html += `
+            </div>
+          </div>
+        `;
+      });
+      
+      workoutForm.innerHTML = html;
+    }
+
+    // Mark input as completed
+    function markCompleted(input, exIndex, setNum) {
+      const weightInput = document.getElementById(`ex${exIndex}_set${setNum}_weight`);
+      const repsInput = document.getElementById(`ex${exIndex}_set${setNum}_reps`);
+      
+      if (weightInput.value.trim() !== '' && repsInput.value.trim() !== '') {
+        weightInput.classList.add('completed');
+        repsInput.classList.add('completed');
+      } else {
+        weightInput.classList.remove('completed');
+        repsInput.classList.remove('completed');
+      }
+    }
+
+    // Save workout
+    function saveWorkout() {
+      const phase = document.getElementById('phase-select').value;
+      const day = document.getElementById('day-select').value;
+      const date = document.getElementById('workout-date').value;
+      const workout = workoutData[phase][day];
+      
+      const workoutLog = {
+        date: date,
+        phase: phase,
+        day: day,
+        workoutName: workout.name,
+        exercises: []
+      };
+      
+      workout.exercises.forEach((exercise, index) => {
+        const sets = [];
+        for (let i = 1; i <= exercise.sets; i++) {
+          const weightInput = document.getElementById(`ex${index}_set${i}_weight`);
+          const repsInput = document.getElementById(`ex${index}_set${i}_reps`);
+          
+          if (weightInput && repsInput && weightInput.value.trim() !== '' && repsInput.value.trim() !== '') {
+            sets.push({
+              weight: weightInput.value.trim(),
+              reps: repsInput.value.trim()
+            });
+          }
+        }
+        
+        if (sets.length > 0) {
+          workoutLog.exercises.push({
+            name: exercise.name,
+            sets: sets
+          });
+        }
+      });
+      
+      if (workoutLog.exercises.length === 0) {
+        alert('Please enter at least one set before saving!');
+        return;
+      }
+      
+      let workouts = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+      workouts.unshift(workoutLog);
+      
+      if (workouts.length > 50) {
+        workouts = workouts.slice(0, 50);
+      }
+      
+      localStorage.setItem('workoutHistory', JSON.stringify(workouts));
+      
+      alert('✅ Workout saved successfully!');
+      loadHistory();
+      clearWorkout();
+    }
+
+    // Load last workout
+    function loadWorkout() {
+      const phase = document.getElementById('phase-select').value;
+      const day = document.getElementById('day-select').value;
+      
+      const workouts = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+      const lastWorkout = workouts.find(w => w.phase === phase && w.day === day);
+      
+      if (!lastWorkout) {
+        alert('No previous workout found for this day!');
+        return;
+      }
+      
+      const workout = workoutData[phase][day];
+      
+      workout.exercises.forEach((exercise, exIndex) => {
+        const savedExercise = lastWorkout.exercises.find(e => e.name === exercise.name);
+        if (savedExercise) {
+          savedExercise.sets.forEach((setData, setIndex) => {
+            const weightInput = document.getElementById(`ex${exIndex}_set${setIndex + 1}_weight`);
+            const repsInput = document.getElementById(`ex${exIndex}_set${setIndex + 1}_reps`);
+            
+            if (weightInput && repsInput) {
+              // Handle both old format (string) and new format (object)
+              if (typeof setData === 'string') {
+                // Old format: "225 × 8" or "225 x 8"
+                const parts = setData.split(/[×x]/);
+                if (parts.length === 2) {
+                  weightInput.value = parts[0].trim();
+                  repsInput.value = parts[1].trim();
+                }
+              } else {
+                // New format: {weight: "225", reps: "8"}
+                weightInput.value = setData.weight;
+                repsInput.value = setData.reps;
+              }
+              weightInput.classList.add('completed');
+              repsInput.classList.add('completed');
+            }
+          });
+        }
+      });
+      
+      alert('📂 Last workout loaded!');
+    }
+
+    // Clear workout form
+    function clearWorkout() {
+      const inputs = document.querySelectorAll('.set-input-group input');
+      inputs.forEach(input => {
+        input.value = '';
+        input.classList.remove('completed');
+      });
+    }
+
+    // Load history
+    function loadHistory() {
+      const historyList = document.getElementById('history-list');
+      const workouts = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+      
+      if (workouts.length === 0) {
+        historyList.innerHTML = '<p class="muted">No workouts logged yet. Start tracking your progress!</p>';
+        return;
+      }
+      
+      let html = '';
+      workouts.slice(0, 10).forEach((workout, index) => {
+        // Create a summary of the workout
+        let summary = '';
+        if (workout.exercises && workout.exercises.length > 0) {
+          const firstEx = workout.exercises[0];
+          if (firstEx.sets && firstEx.sets.length > 0) {
+            const firstSet = firstEx.sets[0];
+            if (typeof firstSet === 'string') {
+              summary = ` - ${firstSet}`;
+            } else {
+              summary = ` - ${firstSet.weight} × ${firstSet.reps}`;
+            }
+          }
+        }
+        
+        html += `
+          <div class="history-entry">
+            <div>
+              <div class="history-date">${new Date(workout.date).toLocaleDateString()}</div>
+              <div class="history-workout">${workout.workoutName}${summary}</div>
+            </div>
+            <button class="history-delete" onclick="deleteWorkout(${index})" title="Delete workout">🗑️</button>
+          </div>
+        `;
+      });
+      
+      historyList.innerHTML = html;
+    }
+
+    // Delete workout
+    function deleteWorkout(index) {
+      if (!confirm('Are you sure you want to delete this workout?')) return;
+      
+      let workouts = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+      workouts.splice(index, 1);
+      localStorage.setItem('workoutHistory', JSON.stringify(workouts));
+      loadHistory();
+    }
+
+    // Event listeners
+    document.getElementById('phase-select').addEventListener('change', updateDaySelect);
+    document.getElementById('day-select').addEventListener('change', loadWorkoutForm);
+
+    // Initialize on page load
+    window.addEventListener('load', initTracker);
+  </script>
 </body>
 </html>
